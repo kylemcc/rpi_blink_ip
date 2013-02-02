@@ -1,3 +1,4 @@
+CC=gcc
 CFLAGS=-Wall
 
 all: blink.c
@@ -5,8 +6,11 @@ all: blink.c
 	make blink 
 
 blink: blink.c
-	gcc $(CFLAGS) $(USERDEF) blink.c -o blink
+	$(CC) $(CFLAGS) $(USERDEF) -DRPI -DNDEBUG blink.c -o blink
+
+debug: blink.c
+	$(CC) $(CFLAGS) $(USERDEF) blink.c -o dblink
 
 .PHONY: clean
 clean:
-	rm -f blink
+	rm -f blink dblink

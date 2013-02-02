@@ -14,6 +14,7 @@
 static const char *LED_ON =  "***";
 static const char *LED_OFF = "   ";
 #define CTRL_FILE stdout
+#define rewind(stream) fprintf(stream, "\r")
 
 #else
 
@@ -42,7 +43,7 @@ static const char *CTRL_FILE_NAME = "/dev/null";
 
 
 static const char *LED_ON =  "255";
-static const char *LED_OFF = "0  ";
+static const char *LED_OFF = "0";
 
 static FILE *__ctrl_file;
 #define CTRL_FILE __ctrl_file
@@ -119,13 +120,15 @@ static struct ifaddrs *get_ip_addr()
 
 static void tap(struct timeval duration, struct timeval gap)
 {
-	fprintf(CTRL_FILE, "%s\r", LED_ON);
+	fprintf(CTRL_FILE, "%s", LED_ON);
 	fflush(CTRL_FILE);
+	rewind(CTRL_FILE);
 
 	my_sleep(duration);
 
-	fprintf(CTRL_FILE, "%s\r", LED_OFF);
+	fprintf(CTRL_FILE, "%s", LED_OFF);
 	fflush(CTRL_FILE);
+	rewind(CTRL_FILE);
 
 	my_sleep(gap);
 }
@@ -191,6 +194,7 @@ int main(int argc, char *argv[])
 	inet_ntop(AF_INET, &(sin->sin_addr), ip, INET_ADDRSTRLEN);
 	//printf("Local ip: %s\n", ip);
 
+	rewind(CTRL_FILE);
 	flutter();
 	my_sleep(MED_GAP);
 	char *cur;
