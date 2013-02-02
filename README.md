@@ -11,9 +11,9 @@ Building
   
 Making it useful
 ================
-1. Install netplugd, a daemon that monitors the status available network interfaces
+1. Install netplugd, a daemon that monitors the status of available network interfaces
   - `sudo apt-get install netplugd`
-  - This should add the necessary init and rc scripts so that the service is launched on startup
+  - This should add the necessary init and rc scripts so that the service is launched on boot
 2. Start netplugd, if it's not already: `service netplug start`
 3. Copy the "blink" binary to some logical place: `cp blink /etc/netplug/`
 4. Edit the netplug "action" script, which is called when the status of a network interface changes:
